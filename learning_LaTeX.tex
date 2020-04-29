@@ -5,6 +5,10 @@
 \usepackage{tabularx}
 \usepackage{indentfirst} 
 \setlength{\parindent}{2em}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{graphicx}
 \begin{document}
     \title{标题页}
     \author{Ryan\thanks{注脚}%
@@ -30,7 +34,7 @@
         内部则使用直立体文字。%
         }\par
     在合适的位置插入一个不会断行的空格Fig.~1, Ryan~Fan\par
-    断行\\[15pt]可以带可选参数 ⟨length⟩,用于在换行处向下增加垂直间距%
+    断行\\[15pt]可以带可选参数 $\langle length\rangle$,用于在换行处向下增加垂直间距%
     \newline{}或者newline命令，不用带参数\par
     \newpage 断页，在在双栏排版中只起到另起一栏的作用\par
     断词　I think this is: supercalifragil\-isticexpialidocious. %
@@ -165,14 +169,14 @@
         for (int i=0; i<4; ++i)
         printf("Number %d\n",i);
     \end{verbatim*}
-    要排版简短的代码或关键字\textbackslash verb ⟨delim⟩⟨code⟩⟨delim⟩\par
-    ⟨delim⟩ 标明代码的分界位置,前后必须一致,除字母、空格或星号外,%
+    要排版简短的代码或关键字\textbackslash verb $\langle delim\rangle\langle code\rangle\langle delim\rangle$\par
+    $\langle delim\rangle$ 标明代码的分界位置,前后必须一致,除字母、空格或星号外,%
     可任意选择使得不与代码本身冲突,习惯上使用 | 符号。\par
     \verb|\LaTeX| \\ 
     \verb+(a || b)+ \verb*+(a || b)+    
     \subsection{表格}
     \subsubsection{列表格}
-    tabular 环境使用 ⟨column-spec⟩ 参数指定表格的列数以及每列的格式。\par
+    tabular 环境使用 $\langle column-spec\rangle$ 参数指定表格的列数以及每列的格式。\par
     \begin{tabular}{lcr|p{6em}}
         \hline
         left & center & right & par box with fixed width\\
@@ -237,12 +241,125 @@
         \hline
     \end{tabularx}\par
     \subsubsection{横线}
-    \textbackslash cline\{i-j\} 用来绘制跨越部分单元格的横线:\par
+    \textbackslash cline\{$\langle i-j\rangle$\} 用来绘制跨越部分单元格的横线:\par
+    \begin{tabular}{|c|c|c|}
+        \hline
+        4 & 9 & 2 \\ \cline{2-3}
+        3 & 5 & 7 \\ \cline{1-1}
+        8 & 1 & 6 \\ 
+        \hline
+    \end{tabular}\par
     三线表由 booktabs 宏包 支持,它提供了 \textbackslash toprule、%
     \textbackslash midrule 和 \textbackslash bottomrule %
     命令用以排版三线表的三条线, 以及和 \textbackslash cline 对应的 %
     \textbackslash cmidrule。除此之外,最好不要用其它横线以及竖线:\par
-    
+    \begin{tabular}{cccc}
+        \toprule
+        & \multicolumn{3}{c}{Numbers} \\
+        \cmidrule{2-4}
+                & 1 & 2 & 3 \\
+        \midrule
+        Alphbet & A & B & C \\
+        Roman   & I & II& III \\
+        \bottomrule
+    \end{tabular} \par
+    \subsubsection{合并单元格}
+    横向合并单元格较为容易,由 \textbackslash multicolumn\{$\langle n\rangle$\}\{$\langle column-spec\rangle$\}\{$\langle item\rangle$\} %
+    命令实现:\par
+    其中 $\langle n\rangle$ 为要合并的列数,$\langle column-spec\rangle$ 为合并单元格后的列格式,只允许出现一个 l/c/r 或 p 格式。%
+    如果合并前的单元格前后带表格线 |,合并后的列格式也要带 | 以使得表格的竖线一致。\par
+    形如 \textbackslash multicolumn\{1\}\{$\langle column-spec\rangle$\}\{$\langle item\rangle$\} %
+    的命令可以用来修改某一个单元格的列格式。\par
+    \begin{tabular}{|c|c|c|}
+        \hline
+        1 & 2 & Center \\
+        \hline
+        \multicolumn{2}{|c|}{3} & \multicolumn{1}{r|}{Right} \\
+        \hline
+        4 & \multicolumn{2}{c|}{C} \\
+        \hline
+    \end{tabular}\par
+    纵向合并单元格需要用到 multirow 宏包提供的 %
+    \textbackslash multirow\{$\langle n\rangle$\}\{$\langle width\rangle$\}\{$\langle item\rangle$\} 命令:\par
+    $\langle width\rangle$ 为合并后单元格的宽度,可以填 * 以使用自然宽度。\par
+    \begin{tabular}{ccc}
+        \hline
+        \multirow{2}{*}{Item} & \multicolumn{2}{c}{Value} \\ 
+        \cline{2-3}
+                              & First & Second \\
+        \hline
+                            A & 1     & 2 \\
+        \hline 
+    \end{tabular}
+    \subsubsection{嵌套表格}
+    在单元格中嵌套一个小表格可 以起到``拆分单元格''的效果。\par
+    注意要用 \textbackslash multicolumn 命令配合 @\{\} %
+    格式把单元格的额外边距去掉,使得嵌套的表格线能和外层的表格线正确相连:\par
+    \begin{tabular}{|c|c|c|}
+        \hline
+        a & b                                   & c \\
+        \hline
+        a & \multicolumn{1}{@{}c@{}|}
+                        {\begin{tabular}{c|c}
+                            e & f \\
+                            \hline
+                            e & f \\
+                         \end{tabular}}         & c \\
+        \hline
+        a & b                                   & c \\
+        \hline
+    \end{tabular}\par
+    如果不需要为“拆分的单元格”画线,并且只在垂直方向“拆分”的话,makecell 宏包%
+    提供 的 \textbackslash makecell 命令是一个简单的解决方案:\par
+    \begin{tabular}{|c|c|}
+        \hline
+        a & \makecell{d1 \\ d2} \\
+        \hline
+        b & c \\
+        \hline
+    \end{tabular}
+    \subsubsection{行距控制}
+    \LaTeX 生成的表格看起来通常比较紧凑。%
+    修改参数 \textbackslash arraystretch 可以得到行距更加宽松 的表格:\par
+    \renewcommand\arraystretch{1.8}
+    \begin{tabular}{|c|}
+        \hline
+        Really loose \\
+        \hline
+        tabular rows. \\
+        \hline
+    \end{tabular}\par
+    另一种增加间距的办法是给换行命令 \textbackslash\textbackslash 添加可选参数,%
+    在这一行下面加额外的间距,适合用于在行间不加横线的表格:\par
+    \renewcommand\arraystretch{1}
+    \begin{tabular}{c}
+        \hline
+        Head lines \\[6pt]
+        tabular lines \\
+        tabular lines \\
+        \hline
+    \end{tabular}
+    \subsection{图片}
+    \LaTeX 本身不支持插图功能,需要由 graphicx 宏包辅助支持。\par
+    使用 \textbackslash includegraphics[$\langle options\rangle$]\{$\langle filename\rangle$\} 命令加载图片了:\par
+    其中 $\langle filename\rangle$ 为图片文件名,文件名有时需要使用相对路径或绝对路径。\par
+    \textbackslash graphicspath 命令,用于声明一个或多个图片文件存放的目录,%
+    使用这些目录里的图片时可不用写路径:\par
+    \textbackslash includegraphics 命令的可选参数 $\langle options\rangle$ 支持 %
+    $\langle key\rangle$=$\langle value\rangle$ 形式赋值,常用的参数如下:\par
+    \begin{tabular}{ll}
+        \hline
+        参数                                 & 含义 \\
+        \hline
+        width=$\langle width\rangle$        & 将图片缩放到宽度为$\langle width\rangle$ \\
+        height=$\langle height\rangle$      & 将图片缩放到高度为$\langle height\rangle$ \\
+        scale=$\langle scale\rangle$        & 将图片相对于原尺寸缩放$\langle scale\rangle$倍 \\
+        angle=$\langle angle\rangle$        & 令图片逆时针旋转$\langle angle\rangle$度 \\
+        \hline
+    \end{tabular}
+    \includegraphics[scale=0.1]{/home/ryan/Pictures/wallpaper/heic2007a}
+    \graphicspath{{/home/ryan/Pictures/wallpaper/}}
+    \includegraphics[scale=0.1]{heic1501a}
     \appendix
     \section{附录}
 \end{document}
