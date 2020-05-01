@@ -360,6 +360,80 @@
     \includegraphics[scale=0.1]{/home/ryan/Pictures/wallpaper/heic2007a}
     \graphicspath{{/home/ryan/Pictures/wallpaper/}}
     \includegraphics[scale=0.1]{heic1501a}
+    \subsection{盒子}
+    \subsubsection{水平盒子}
+    \textbackslash mbox\{\ldots \}\par
+    \textbackslash makebox$[\langle width\rangle][\langle align\rangle]\{\ldots \}$\par
+    \textbackslash mbox 生成一个基本的水平盒子,内容只有一行,不允许分段(除非嵌套其它盒子)
+    \textbackslash makebox 更进一步,可以加上可选参数用于控制盒子的宽度 $\langle width\rangle$,%
+    以及内容的对齐方式$\langle align\rangle$,可选居中 c(默认值) 、左对齐 l、右对齐 r 和分散对齐 s\par
+    |\mbox{Test some words.}|\\
+    |\makebox[10em]{Test some words.}|\\
+    |\makebox[10em][l]{Test some words.}|\\
+    |\makebox[10em][r]{Test some words.}|\\
+    |\makebox[10em][s]{Test some words.}|\par
+    \subsubsection{带框的水平盒子}
+    \textbackslash fbox 和 \textbackslash framebox 让我们可以为水平盒子添加边框。\par
+    \fbox{Test some words.}\\
+    \framebox[10em][r]{Test some words.}\par
+    可以通过 \textbackslash setlength 命令调节边框的宽度 \textbackslash fboxrule %
+    和内边距 \textbackslash fboxsep:\par
+    \framebox[10em][r]{Test box.}\\
+    \setlength{\fboxrule}{1.6pt}
+    \setlength{\fboxsep}{1em}
+    \framebox[10em][r]{Test box.}\par
+    \subsubsection{垂直盒子}
+    排版一个文字可以换行的盒子:\par
+    \textbackslash parbox$[\langle align\rangle][\langle height\rangle][\langle inner-align\rangle]\{\langle width\rangle\}\{\ldots \}$
+    \textbackslash begin\{minipage\}$[\langle align\rangle][\langle height\rangle][\langle inner-align\rangle]\{\langle width\rangle\}$\\
+    \ldots\\
+    \textbackslash end\{minipage\}\par
+    其中 $[\langle align\rangle]$ 为盒子和周围文字的对齐情况(类似 tabular 环境); %
+    $\langle height\rangle$ 和 $\langle inner-align\rangle$设置盒子的高度和内容的对齐方式,%
+    类似水平盒子 \textbackslash makebox 的设置,不过 $\langle inner-align\rangle$ 接受的%
+    参数是顶部 t、底部 b、居中 c 和分散对齐 s。\par
+    三字经：\parbox[t]{3em}{人之初 性本善 性相近 习相远}
+    \quad
+    千字文：
+    \begin{minipage}[b][8ex][t]{4em}
+        天地玄黄 宇宙洪荒
+    \end{minipage}\par
+    如果在 minipage 里使用 \textbackslash footnote 命令,生成的脚注会出现在盒子底部,编号是独立的, %
+    并且使用小写字母编号。而在 \textbackslash parbox 里无法正常使用 \textbackslash footnote 命令,%
+    只能在盒子里使用\textbackslash footnotemark,在盒子外使用\textbackslash footnotetext。\par
+    \fbox{这是一个垂直盒子的测试。\footnotemark}
+    \footnotetext{注脚来自fbox}
+    \fbox{\begin{minipage}{15em}%
+             这是一个垂直盒子的测试。
+             \footnote{注脚来自minipage.}   
+          \end{minipage}
+    }\par
+    \subsubsection{标尺盒子}
+    \textbackslash rule $[\langle raise\rangle]\{\langle width\rangle\}\{\langle height\rangle\}$%
+    命令用来画一个实心的矩形盒子,也可适当调整以用来画线(标尺):\par
+    Black \rule{12pt}{4pt} box.\\
+    Upper \rule[4pt]{6pt}{8pt} and lower \rule[-4pt]{6pt}{8pt} box.\\
+    A \rule[-.4pt]{6pt}{.4pt} line.\par
+    \subsection{浮动体}
+    \LaTeX 预定义了两类浮动体环境 figure 和 table。习惯上 figure 里放图片,table 里放表格,但并没有严格限制,%
+    可以在任何一个浮动体里放置文字、公式、表格、图片等等任意内容。\par
+    \textbackslash begin\{table\}$[\langle placement\rangle]$\\
+    \ldots\\
+    \textbackslash end\{table\}\par
+    $[\langle placement\rangle]$ 参数提供了一些符号用来表示浮动体允许排版的位置,如 hbp 允许浮动体排版
+    在当前位置、底部或者单独成页。table 和 figure 浮动体的默认设置为 tbp。\par
+    \begin{tabular}{ll}
+        \toprule
+        参数     & 含义\\
+        \midrule
+        h       & 当前位置(代码所处的上下文)\\
+        t       & 顶部\\
+        b       & 底部\\ 
+        p       & 单独成页\\ 
+        !       & 在决定位置时忽视限制\\
+        \bottomrule
+    \end{tabular}\par
+    
     \appendix
     \section{附录}
 \end{document}
