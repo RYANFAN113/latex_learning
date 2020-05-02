@@ -9,6 +9,7 @@
 \usepackage{multirow}
 \usepackage{makecell}
 \usepackage{graphicx}
+\usepackage{subfig}
 \begin{document}
     \title{标题页}
     \author{Ryan\thanks{注脚}%
@@ -357,9 +358,9 @@
         angle=$\langle angle\rangle$        & 令图片逆时针旋转$\langle angle\rangle$度 \\
         \hline
     \end{tabular}
-    \includegraphics[scale=0.1]{/home/ryan/Pictures/wallpaper/heic2007a}
+    \includegraphics[scale=0.05]{/home/ryan/Pictures/wallpaper/heic2007a}
     \graphicspath{{/home/ryan/Pictures/wallpaper/}}
-    \includegraphics[scale=0.1]{heic1501a}
+    \includegraphics[scale=0.05]{heic1501a}
     \subsection{盒子}
     \subsubsection{水平盒子}
     \textbackslash mbox\{\ldots \}\par
@@ -420,8 +421,10 @@
     \textbackslash begin\{table\}$[\langle placement\rangle]$\\
     \ldots\\
     \textbackslash end\{table\}\par
-    $[\langle placement\rangle]$ 参数提供了一些符号用来表示浮动体允许排版的位置,如 hbp 允许浮动体排版
-    在当前位置、底部或者单独成页。table 和 figure 浮动体的默认设置为 tbp。\par
+    $[\langle placement\rangle]$ 参数提供了一些符号用来表示浮动体允许排版的位置,%
+    如 hbp 允许浮动体排版在当前位置、底部或者单独成页。table 和 figure 浮动体的默认设置为 tbp。\par
+    双栏排版环境下,\LaTeX 提供了 table* 和 figure* 环境用来排版跨栏的浮动体。它们的用%
+    法与 table 和 figure 一样,不同之处为双栏的 $[\langle placement\rangle]$ 参数只能用 tp 两个位置。\par
     \begin{tabular}{ll}
         \toprule
         参数     & 含义\\
@@ -433,7 +436,67 @@
         !       & 在决定位置时忽视限制\\
         \bottomrule
     \end{tabular}\par
-    
+    \textbackslash clearpage 命令 会在另起一页之前,先将所有推迟处理的浮动体排版成页,%
+    此时 htbp 等位置限制被完全忽略。\par
+    float 宏包为浮动体提供了 H 位置参数,不与 htbp 及 ! 混用。使用 H 位置参数时,%
+    会取消浮 动机制,将浮动体视为一般的盒子插入当前位置。\par
+    \subsubsection{浮动体的标题}
+    图表等浮动体提供了 \textbackslash caption\{\ldots\} 命令加标题,并且自动给浮动体编号:\par
+    可以用带星号的命令 \textbackslash caption* 生成不带编号 的标题,%
+    也可以使用带可选参数的形式 \textbackslash caption[\ldots]\{\ldots\},
+    使得在目录里使用短标题。\textbackslash caption 命令之后还可以紧跟 %
+    \textbackslash label 命令标记交叉引用。\par
+    可通过修改 \textbackslash figurename 和 \textbackslash tablename %
+    的内容来修改标题的前缀。标题样式的 定制功能由 caption 宏包提供.\par
+    table 和 figure 两种浮动体分别有各自的生成目录的命令:\\
+    \textbackslash listoftables\\
+    \textbackslash listoffigures\par    
+    \subsubsection{并排和子图表}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[scale=0.015]{heic1501a}
+        \qquad
+        \includegraphics[scale=0.015]{heic2007a}\\
+        \includegraphics[scale=0.02]{opo0501a}
+        \caption{图片标题}
+        \label{}
+    \end{figure}
+    由于标题是横跨一行的,用 \textbackslash caption 命令为每个图片单独生成标题%
+    就需要借助前文提到的\textbackslash parbox 或者 minipage 环境,将标题限制在盒子内。\par
+    \begin{figure}[htbp]
+        \centering
+        \begin{minipage}[b][120pt][t]{0.45\linewidth}
+            \centering
+            \includegraphics[scale=0.025]{heic1501a}
+            \caption{并排图1}
+        \end{minipage}
+        \qquad
+        \begin{minipage}[b][120pt][t]{0.45\linewidth}
+            \centering
+            \includegraphics[scale=0.025]{heic2007a}
+            \caption{并排图2}
+        \end{minipage}
+    \end{figure}     
+    给每个图片定义小标题时,就要用到 subfig 宏包的功能    
+    \begin{figure}[htbp]
+        \centering
+        \subfloat[]{%
+            \begin{minipage}[b][100pt][t]{0.45\linewidth}
+                \centering
+                \includegraphics[scale=0.025]{heic2007a}
+            \end{minipage}
+        }
+        \qquad
+        \subfloat[]{%
+            \begin{minipage}[b][100pt][t]{0.45\linewidth}
+                \centering 
+                \includegraphics[scale=0.025]{heic1501a}
+            \end{minipage}
+        }
+        \caption{使用 subfig 宏包的 \textbackslash subfloat 命令排版子图。}
+        
+    \end{figure}
+    \newpage
     \appendix
     \section{附录}
 \end{document}
