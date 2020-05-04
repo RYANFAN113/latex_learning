@@ -1,4 +1,4 @@
-%!TEX program = xelatex
+%TEX program = xelatex
 %表示用xelatex编译文件
 \documentclass[a4paper]{ctexart}
 \usepackage{array}
@@ -10,6 +10,13 @@
 \usepackage{makecell}
 \usepackage{graphicx}
 \usepackage{subfig}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{latexsym}
+\usepackage{float}
+\DeclareMathOperator{\argh}{argh} 
+\DeclareMathOperator*{\nut}{Nut}
+\usepackage{yhmath}
+
 \begin{document}
     \title{标题页}
     \author{Ryan\thanks{注脚}%
@@ -494,8 +501,556 @@
             \end{minipage}
         }
         \caption{使用 subfig 宏包的 \textbackslash subfloat 命令排版子图。}
-        
     \end{figure}
+    \section{数学公式}
+    amsmath 宏 包,对多行公式的排版提供了有力的支持,%
+    amsfonts 宏包以及基于它的 amssymb 宏包提 供了丰富的数学符号,%
+    amsthm 宏包扩展了 \LaTeX 定理证明格式。\par
+    \subsection{公式排版基础}
+    \subsubsection{行内和行间公式}
+    行内公式由一对 \$ 符号包裹:\\
+    The Pythagorean theorem is %
+    $a^2 + b^2 = c^2$.\par
+    行间公式在 \LaTeX 里由 equation 环境包裹,equation 环境为公式自动生成一 个编号,%
+    这个编号可以用 \textbackslash label 和 \textbackslash ref 生成交叉引用。\par
+    amsmath 的 \textbackslash eqref 命令甚至为引用 自动加上圆括号;%
+    还可以用 \textbackslash tag 命令手动修改公式的编号,%
+    或者用 \textbackslash notag 命令取消为公式编 号。\par
+    The Pythagorean theorem is:
+    \begin{equation}
+        a^2 + b^2 = c^2 \label{pythagorean}
+    \end{equation}
+    Equation \eqref{pythagorean} is called `Gougu theorem' in Chinese.\par
+    It's wrong to say
+    \begin{equation}
+        1 + 1 = 3 \tag{dumb}
+    \end{equation}
+    or
+    \begin{equation}
+        1 + 1 = 4 \notag
+    \end{equation}\par
+    直接使用不带编号的行间公式:
+    \begin{equation*}
+        a^2 + b^2 = c^2
+    \end{equation*}
+    For short:
+    \[a^2 + b^2 = c^2\]
+    Or if you like the long one:
+    \begin{displaymath}
+        a^2 + b^2 = c^2
+    \end{displaymath}
+    行内公式和行间公式的对比:\\
+    In text:
+    $\lim_{n \to \infty} \sum_{k=1}^n \frac{1}{k^2} = \frac{\pi^2}{6}$\\
+    In display:
+    \[\lim_{n \to \infty} \sum_{k=1}^n \frac{1}{k^2} = \frac{\pi^2}{6}\]
+    \subsection{数学模式}
+    \renewcommand{\labelenumi}{\arabic{enumi}.}
+    \begin{enumerate}
+        \item 数学模式中输入的空格被忽略。
+        \item 不允许有空行(分段)。
+        \item 所有的字母被当作数学公式中的变量处理,想在数学公式中输入正体的文本,%
+              可以用\textbackslash mathrm 或者 amsmath 提供的 \textbackslash text 命令。
+    \end{enumerate}
+    $x^2 \geq 0  \qquad
+     \text{for \textbf{all} } x \in \mathbb{R}$
+    \subsection{数学符号}
+    \subsubsection{一般符号}    
+    \begin{table}[H]
+        \centering
+        \caption{文本/数学模式通用符号}
+        \begin{tabular}{clclclcl}
+            \hline
+            \{      & \textbackslash\{       & \}   & \textbackslash\}    & \$          & \textbackslash\$             & \%     & \textbackslash\%  \\
+            \dag    & \textbackslash dag     & \S   & \textbackslash S    & \copyright  & \textbackslash copyright     & \dots  & \textbackslash dots   \\
+            \ddag   & \textbackslash ddag    & \P   & \textbackslash P    & \pounds     & \textbackslash pounds    \\
+            \hline
+        \end{tabular}        
+    \end{table}
+    \begin{table}[H]
+        \centering
+        \caption{希腊字母}
+        \begin{tabular}{clclclcl}
+            \toprule
+            $\alpha$        & \textbackslash alpha      & $\theta$      & \textbackslash theta      &
+            $o$             & o                         & $\upsilon$    & \textbackslash upsilon    \\
+            $\beta$         & \textbackslash beta       & $\vartheta$   & \textbackslash vartheta   &
+            $\pi$           & \textbackslash pi         & $\phi$        & \textbackslash phi        \\
+            $\gamma$        & \textbackslash gamma      & $\iota$       & \textbackslash iota       &
+            $\varpi$        & \textbackslash varpi      & $\varphi$     & \textbackslash varphi     \\
+            $\delta$        & \textbackslash delta      & $\kappa$      & \textbackslash kappa      &
+            $\rho$          & \textbackslash rho        & $\chi$        & \textbackslash chi        \\
+            $\epsilon$      & \textbackslash epsilon    & $\lambda$     & \textbackslash lambda     &
+            $\varrho$       & \textbackslash varrho     & $\psi$        & \textbackslash psi        \\
+            $\varepsilon$   & \textbackslash varepsilon & $\mu$         & \textbackslash mu         & 
+            $\sigma$        & \textbackslash sigma      & $\omega$      & \textbackslash omega      \\
+            $\zeta$         & \textbackslash zeta       & $\nu$         & \textbackslash nu         &
+            $\varsigma$     & \textbackslash varsigma                                               \\ 
+            $\eta$          & \textbackslash eta        & $\xi$         & \textbackslash xi         & 
+            $\tau$          & \textbackslash tau                                                    \\
+            \midrule
+            $\Gamma$        & \textbackslash Gamma      & $\Lambda$     & \textbackslash Lambda     &
+            $\Sigma$        & \textbackslash Sigma      & $\Psi$        & \textbackslash Psi        \\
+            $\Delta$        & \textbackslash Delta      & $\Xi$         & \textbackslash Xi         &
+            $\Upsilon$      & \textbackslash Upsilon    & $\Omega$      & \textbackslash Omega      \\
+            $\Theta$        & \textbackslash Theta      & $\Pi$         & \textbackslash Pi         & 
+            $\Phi$          & \textbackslash Phi                                                    \\
+            \midrule
+            \multicolumn{4}{l}{以下命令依赖 amsmath 宏包}\\
+            $\varGamma$     & \textbackslash varGamma   & $\varLambda$  & \textbackslash varLambda  & 
+            $\varSigma$     & \textbackslash varSigma   & $\varPsi$     & \textbackslash varPsi     \\
+            $\varDelta$     & \textbackslash varDelta   & $\varXi$      & \textbackslash varXi      &
+            $\varUpsilon$   & \textbackslash varUpsilon & $\varOmega$   & \textbackslash varOmega   \\
+            $\varTheta$     & \textbackslash varTheta   & $\varPi$      & \textbackslash varPi      &
+            $\varPhi$       & \textbackslash varPhi                                                 \\
+            \midrule
+            \multicolumn{4}{l}{依赖 amssymb 宏包}\\
+            $\digamma$      & \textbackslash digamma    & $\varkappa$   & \textbackslash varkappa   &
+            $\beth$         & \textbackslash beth       & $\gimel$‬      & \textbackslash gimel      \\ 
+            $\daleth$       & \textbackslash daleth                                                 \\
+            \bottomrule
+        \end{tabular}        
+    \end{table}
+    \begin{table}[H]  
+        \centering  
+        \caption{其它符号}
+        \begin{tabular}{clclclcl}
+            \toprule
+            $\dots$         & \textbackslash dots       & $\cdots$          & \textbackslash cdots                          &
+            $\vdots$        & \textbackslash vdots      & $\ddots$          & \textbackslash ddots                          \\
+            $\hbar$         & \textbackslash hbar       & $\imath$          & \textbackslash imath                          &
+            $\jmath$        & \textbackslash jmath      & $\ell$            & \textbackslash ell                            \\
+            $\Re$           & \textbackslash Re         & $\Im$             & \textbackslash Im                             &
+            $\aleph$        & \textbackslash aleph      & $\wp$             & \textbackslash wp                             \\
+            $\forall$       & \textbackslash forall     & $\exists$         & \textbackslash exists                         &  
+            $\partial$      & \textbackslash partial    & $'$               & '                                             \\ 
+            $\prime$        & \textbackslash prime      & $\emptyset$       & \textbackslash emptyset                       &
+            $\infty$        & \textbackslash infty      & $\nabla$          & \textbackslash nabla                          \\ 
+            $\triangle$     & \textbackslash triangle   & $\bot$            & \textbackslash bot                            &
+            $\top$          & \textbackslash top        & $\angle$          & \textbackslash angle                          \\
+            $\surd$         & \textbackslash surd       & $\diamondsuit$    & \textbackslash diamondsuit                    &
+            $\heartsuit$    & \textbackslash heartsuit  & $\clubsuit$       & \textbackslash clubsuit                       \\ 
+            $\spadesuit$    & \textbackslash spadesuit  & $\neg$            & \textbackslash neg or \textbackslash lnot     &
+            $\flat$         & \textbackslash flat       & $\natural$        & \textbackslash natural                        \\
+            $\sharp$        & \textbackslash sharp                                                                          \\
+            \midrule
+            \multicolumn{3}{l}{以下命令依赖 latexsym 宏包}\\
+            $\mho$          & \textbackslash mho        & $\Box$            & \textbackslash Box                            &
+            $\Diamond$      & \textbackslash Diamond                                                                        \\
+            \bottomrule
+        \end{tabular}    
+    \end{table}
+    $a_1,a_2,\dots,a_n$\\
+    $a_1 + a_2 + \cdots + a_n$\par
+    \subsubsection{指数、上下标和导数}
+    \textasciicircum 和 \_ 标明上下标。%
+    注意上下标的内容(子公式)一般需要用花括号包裹，否 则上下标只对后面的一个符号起作用:\par
+    $p^3_{ij} \qquad
+     m_\mathrm{Kunth} \qquad
+     \sum_{k=1}^3 k$\\
+    $a^x +y \neq a^{x+y} \qquad
+     e^{x^2} \neq {e^x}^2$ \par
+    导数符号$'$ 是一类特殊的上标,可以适当连用表示多阶导数,也可以在其后连用上标:\par
+    $f(x) = x^2 \quad
+     f'(x) = 2x \quad
+     f''^{2}(x) = 4$ \par
+    \subsubsection{分式和根式}
+    分式使用 \textbackslash frac\{分子\}\{分母\} 来书写。%
+    分式的大小在行间公式中是正常大小,而在行内被 极度压缩。%
+    amsmath 提供了方便的命令 \textbackslash dfrac 和 \textbackslash tfrac,%
+    令用户能够在行内使用正常大小的 分式，或是反过来。\par
+    In display style:
+    \[
+        3/8 \qquad
+        \frac{3}{8} \qquad
+        \tfrac{3}{8}
+    \]
+    In text style:
+    $1\frac{1}{2}$~hours \qquad
+    $1\dfrac{1}{2}$~hours\par
+    一般的根式使用 \textbackslash sqrt\{\dots\};%
+    表示 n 次方根时写成 \textbackslash sqrt[n]\{\dots\}。\par
+    $\sqrt{x} \Leftrightarrow x^{1/2} \quad
+     \sqrt[3]{2} \quad
+     \sqrt{x^{2} + \sqrt{y}}$ \par
+    特殊的分式形式,如二项式结构,由 amsmath 宏包的 \textbackslash binom 命令生成:\par
+    Pascal's rule is
+    \[
+        \binom{n}{k} = \binom{n - 1}{k} + \binom{n - 1}{k}   
+    \]
+    \subsubsection{关系符}
+    \begin{table}[H]
+        \centering
+        \caption{二元关系符}
+        \begin{tabular}{clclcl}
+            \toprule
+            $<$             & <                         & $>$           & >                                         & 
+            $=$             & =                                                                                     \\
+            $\equiv$        & \textbackslash equiv      & $\leq$        & \textbackslash leq or \textbackslash le   & 
+            $\geq$          & \textbackslash geq or \textbackslash ge                                               \\
+            $\ll$           & \textbackslash ll         & $\gg$         & \textbackslash gg                         & 
+            $\doteq$        & \textbackslash doteq                                                                  \\
+            $\prec$         & \textbackslash prec       & $\succ$       & \textbackslash succ                       &
+            $\sim$          & \textbackslash sim                                                                    \\
+            $\preceq$       & \textbackslash preceq     & $\succeq$     & \textbackslash succeq                     &
+            $\simeq$        & \textbackslash simeq                                                                  \\
+            $\subset$       & \textbackslash subset     & $\supset$     & \textbackslash supset                     &
+            $\approx$       & \textbackslash approx                                                                 \\
+            $\subseteq$     & \textbackslash subseteq   & $\supseteq$   & \textbackslash supseteq                   &
+            $\cong$         & \textbackslash cong                                                                   \\
+            $\sqsubseteq$   & \textbackslash sqsubseteq & $\sqsupseteq$ & \textbackslash sqsupseteq                 & 
+            $\bowtie$       & \textbackslash bowtie                                                                 \\
+            $\in$           & \textbackslash in         & $\ni$         & \textbackslash ni ,\textbackslash owns    &
+            $\propto$       & \textbackslash propto                                                                 \\
+            $\vdash$        & \textbackslash vdash      & $\dashv$      & \textbackslash dashv                      &
+            $\models$       & \textbackslash models                                                                 \\
+            $\mid$          & \textbackslash mid        & $\parallel$   & \textbackslash parallel                   &
+            $\perp$         & \textbackslash perp                                                                   \\
+            $\smile$        & \textbackslash smile      & $\frown$      & \textbackslash frown                      &
+            $\asymp$        & \textbackslash asymp                                                                  \\
+            $:$             & :                         & $\notin$      & \textbackslash notin                      &
+            $\neq$          & \textbackslash neq or \textbackslash ne                                               \\
+            \midrule
+            \multicolumn{3}{l}{以下命令依赖 latexsym 宏包}\\
+            $\sqsubset$     & \textbackslash sqsubset   & $\sqsupset$   & \textbackslash sqsupset                   & 
+            $\Join$         & \textbackslash Join                                                                   \\
+            \midrule 
+            \multicolumn{3}{l}{以下命令依赖 amssymb 宏包}\\
+            $\lessdot$              & \textbackslash lessdot            & $\gtrdot$         & \textbackslash gtrdot         & 
+            $\doteqdot$             & \textbackslash doteqdot                                                               \\
+            $\leqslant$             & \textbackslash leqslant           & $\geqslant$       & \textbackslash geqslant       &
+            $\risingdotseq$         & \textbackslash risingdotseq                                                           \\
+            $\eqslantless$          & \textbackslash eqslantless        & $\eqslantgtr$     & \textbackslash eqslantgtr     &
+            $\fallingdotseq$        & \textbackslash fallingdotseq                                                          \\
+            $\leqq$                 & \textbackslash leqq               & $\geqq$           & \textbackslash geqq           &
+            $\eqcirc$               & \textbackslash eqcirc                                                                 \\
+            $\circeq$               & \textbackslash circeq             & $\ggg$            & \textbackslash ggg            &
+            $\lll$                  & \textbackslash lll or \textbackslash llless                                           \\
+            $\lesssim$              & \textbackslash lesssim            & $\gtrsim$         & \textbackslash gtrsim         &
+            $\triangleq$            & \textbackslash triangle                                                               \\
+            $\lessapprox$           & \textbackslash lessapprox         & $\gtrapprox$      & \textbackslash gtrapprox      &
+            $\bumpeq$               & \textbackslash bumpeq                                                                 \\
+            $\lessgtr$              & \textbackslash lessgtr            & $\gtrless$        & \textbackslash gtrless        &
+            $\Bumpeq$               & \textbackslash Bumpeq                                                                 \\
+            $\lesseqgtr$            & \textbackslash lesseqgtr          & $\gtreqless$      & \textbackslash gtreqless      &
+            $\thicksim$             & \textbackslash thicksim                                                               \\
+            $\lesseqqgtr$           & \textbackslash lesseqqgtr         & $\gtreqqless$     & \textbackslash gtreqqless     &
+            $\thickapprox$          & \textbackslash thickapprox                                                            \\
+            $\preccurlyeq$          & \textbackslash preccurlyeq        & $\succcurlyeq$    & \textbackslash succcurlyeq    &
+            $\approxeq$             & \textbackslash approxeq                                                               \\
+            $\curlyeqprec$          & \textbackslash curlyeqprec        & $\curlyeqsucc$    & \textbackslash curlyeqsucc    &
+            $\backsim$              & \textbackslash backsim                                                                \\
+            $\precsim$              & \textbackslash precsim            & $\succsim$        & \textbackslash succsim        &
+            $\backsimeq$            & \textbackslash backsimeq                                                              \\
+            $\precapprox$           & \textbackslash precapprox         & $\succapprox$     & \textbackslash succapprox     &
+            $\vDash$                & \textbackslash vDash                                                                  \\
+            $\subseteqq$            & \textbackslash subseteqq          & $\supseteqq$      & \textbackslash supseteqq      &
+            $\Vdash$                & \textbackslash Vdash                                                                  \\
+            $\shortparallel$        & \textbackslash shortparallel      & $\Supset$         & \textbackslash Supset         &
+            $\Vvdash$               & \textbackslash Vvdash                                                                 \\
+            $\blacktriangleleft$    & \textbackslash blacktriangleleft  & $\sqsupset$       & \textbackslash sqsupset       &
+            $\backepsilon$          & \textbackslash backepsilon                                                            \\
+            $\vartriangleright$     & \textbackslash vartriangleright   & $\because$        & \textbackslash because        &
+            $\varpropto$            & \textbackslash varpropto                                                              \\
+            $\blacktriangleright$   & \textbackslash blacktriangleright & $\Subset$         & \textbackslash Subset         &
+            $\between$              & \textbackslash between                                                                \\
+            $\trianglerighteq$      & \textbackslash trianglerighteq    & $\smallfrown$     & \textbackslash smallfrown     &
+            $\pitchfork$            & \textbackslash pitchfork                                                              \\
+            $\vartriangleleft$      & \textbackslash vartriangleleft    & $\shortmid$       & \textbackslash shortmid       &
+            $\smallsmile$           & \textbackslash smallsmile                                                             \\
+            $\trianglelefteq$       & \textbackslash trianglelefteq     & $\therefore$      & \textbackslash therefore      &
+            $\sqsubset$             & \textbackslash sqsubset                                                               \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \LaTeX 还提供了自定义二元关系符的命令 \textbackslash stackrel,用于将一个符号叠加在原有的二元关 系符之上:\par
+    \[
+        f_n(x) \stackrel{*}{\approx} 1    
+    \]
+    \subsubsection{算符}
+    \begin{table}[H]
+        \centering
+        \caption{二元运算符}
+        \begin{tabular}{clclcl}
+            \toprule
+            $+$                 & +                         &$-$                    & -                                 &         
+            $\pm$               & \textbackslash pm                                                                     \\
+            $\mp$               & \textbackslash mp         & $\triangleleft$       & \textbackslash triangleleft       &
+            $\cdot$             & \textbackslash cdot                                                                   \\
+            $\div$              & \textbackslash div        & $\triangleright$      & \textbackslash triangleright      &
+            $\times$            & \textbackslash times                                                                  \\
+            $\setminus$         & \textbackslash setminus   & $\star$               & \textbackslash star               &
+            $\cup$              & \textbackslash cup                                                                    \\
+            $\cap$              & \textbackslash cap        & $\ast$                & \textbackslash ast                &
+            $\sqcup$            & \textbackslash sqcup                                                                  \\
+            $\sqcap$            & \textbackslash sqcap      & $\circ$               & \textbackslash circ               &
+            $\vee$              & \textbackslash vee                                                                    \\
+            $\lor$              & \textbackslash lor        & $\wedge$              & \textbackslash wedge              &
+            $\land$             & \textbackslash land                                                                   \\
+            $\bullet$           & \textbackslash bullet     & $\oplus$              & \textbackslash oplus              &
+            $\ominus$           & \textbackslash ominus                                                                 \\
+            $\diamond$          & \textbackslash diamond    & $\odot$               & \textbackslash odot               &
+            $\oslash$           & \textbackslash oslash                                                                 \\
+            $\uplus$            & \textbackslash uplus      & $\otimes$             & \textbackslash otimes             &
+            $\bigcirc$          & \textbackslash bigcirc                                                                \\
+            $\amalg$            & \textbackslash amalg      & $\bigtriangleup$      & \textbackslash bigtriangleup      &
+            $\bigtriangledown$  & \textbackslash bigtriangledown                                                        \\
+            $\dagger$           & \textbackslash dagger     & $\ddagger$            & \textbackslash ddagger            &
+            $\wr$               & \textbackslash wr                                                                     \\
+            \midrule
+            \multicolumn{3}{l}{以下命令依赖 latexsym 宏包} \\
+            $\lhd$              & \textbackslash lhd        & $\rhd$                & \textbackslash rhd                \\
+            $\unlhd$            & \textbackslash unlhd      & $\unrhd$              & \textbackslash unrhd              \\
+            \midrule
+            \multicolumn{3}{l}{以下命令依赖 amssymb 宏包} \\
+            $\dotplus$          & \textbackslash dotplus        & $\centerdot$      & \textbackslash centerdot          \\
+            $\ltimes$           & \textbackslash ltimes         & $\rtimes$         & \textbackslash rtimes             &
+            $\divideontimes$    & \textbackslash divideontimes                                                          \\
+            $\doublecup$        & \textbackslash doublecup      & $\doublecap$      & \textbackslash doublecap          &
+            $\smallsetminus$    & \textbackslash smallsetminus                                                          \\
+            $\veebar$           & \textbackslash veebar         & $\barwedge$       & \textbackslash barwedge           &
+            $\doublebarwedge$   & \textbackslash doublebarwedge                                                         \\
+            $\boxplus$          & \textbackslash boxplus        & $\boxminus$       & \textbackslash boxminus           &
+            $\circleddash$      & \textbackslash circleddash                                                            \\
+            $\boxtimes$         & \textbackslash boxtimes       & $\boxdot$         & \textbackslash boxdot             &
+            $\circledcirc$      & \textbackslash circledcirc                                                            \\
+            $\intercal$         & \textbackslash intercal       & $\circledast$     & \textbackslash circledast         &
+            $\rightthreetimes$  & \textbackslash rightthreetimes                                                        \\
+            $\curlyvee$         & \textbackslash curlyvee       & $\curlywedge$     & \textbackslash curlywedge         &
+            $\leftthreetimes$   & \textbackslash listoffigures                                                          \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \begin{table}[H]
+        \centering
+        \caption{\LaTeX 作为算符的函数名称}
+        \begin{tabular}{clclclcl}
+            \toprule
+            \multicolumn{8}{l}{不带上下限的算符}\\
+            $\sin$          & \textbackslash sin        & $\arcsin$         & \textbackslash arcsin         &
+            $\sinh$         & \textbackslash sinh       & $\exp$            & \textbackslash exp            \\
+            $\dim$          & \textbackslash dim        & $\cos$            & \textbackslash cos            & 
+            $\arccos$       & \textbackslash arccos     &$\cosh$            & \textbackslash cosh           \\
+            $\log$          & \textbackslash log        & $\ker$            & \textbackslash ker            & 
+            $\tan$          & \textbackslash tan        & $\arctan$         & \textbackslash arctan         \\
+            $\tanh$         & \textbackslash tanh       & $\lg$             & \textbackslash lg             &
+            $\hom$          & \textbackslash hom        & $\cot$            & \textbackslash cot            \\
+            $\arg$          & \textbackslash arg        & $\coth$           & \textbackslash coth           &
+            $\ln$           & \textbackslash ln         & $\deg$            & \textbackslash deg            \\
+            $\sec$          & \textbackslash sec        & $\csc$            & \textbackslash csc            \\
+            \midrule
+            \multicolumn{8}{l}{带上下限的算符}\\
+            $\lim$          & \textbackslash lim        & $\limsup$         & \textbackslash limsup         &
+            $\liminf$       & \textbackslash liminf     & $\sup$            & \textbackslash sup            \\
+            $\inf$          & \textbackslash inf        & $\min$            & \textbackslash min            &
+            $\max$          & \textbackslash max        & $\det$            & \textbackslash det            \\
+            $\Pr$           & \textbackslash Pr         & $\gcd$            & \textbackslash gcd            \\         
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \[
+        \lim_{x \rightarrow 0} \frac{\sin x}{s} = 1    
+    \]
+    对于求模表达式,\LaTeX 提供了 \textbackslash pmod 和 \textbackslash bmod 命令:\par
+    \[
+        a \bmod b   \qquad
+        x \equiv a \pmod{b}  
+    \]
+    amsmath 允许用户在\emph{导言区}用 \textbackslash DeclareMathOperator 在定义自己 的算符,%
+    其中带星号的命令定义带上下限的算符:\\
+    \[ \argh 3 = \nut_{x = 1} 4x \]
+    \subsubsection{巨算符}
+    In text:
+    $
+        \sum_{i=1}^n   \quad
+        \int_0^{\frac{\pi}{2}}   \quad
+        \oint_0^{\frac{\pi}{2}} \quad
+        \prod_{\epsilon}
+    $\\
+    In display:
+    \[
+        \sum_{i=1}^n    \quad 
+        \int_0^{\frac{\pi}{2}}\quad
+        \oint_0^{\frac{\pi}{2}} \quad 
+        \prod_{\epsilon}    
+    \]\par
+    巨算符的上下标位置可由 \textbackslash limits 和 \textbackslash nolimits 控制\par
+    In text:
+    $
+        \sum\limits_{i=1}^n \quad
+        \int\limits_0^{\frac{\pi}{2}}   \quad
+        \oint\limits_0^{\frac{\pi}{2}}  \quad
+        \prod\limits_{\epsilon}
+    $\\
+    In display:
+    \[
+        \sum\nolimits_{i = 1}^n \quad
+        \int\limits_0^{\frac{\pi}{2}} \quad
+        \oint\limits_0^{\frac{\pi}{2}} \quad
+        \prod\nolimits_{\epsilon}    
+    \]\par
+    amsmath 宏包还提供了 \textbackslash substack,能够在下限位置书写多行表达式:
+    \[
+        \sum_{\substack{0\le i\le n\\
+                        j\in\mathbb{R}}} P(i,j) = Q(n)    
+    \]
+    subarray 环境更进 一步,令多行表达式可选择居中 (c) 或左对齐 (l):
+    \[
+        \sum_{\begin{subarray}{l}
+                    0\le i\le n\\
+                    j\in\mathbb{R}
+              \end{subarray}} P(i,j) = 
+        Q(n)
+    \]
+    \subsubsection{数学重音和上下括号}
+    \begin{table}[H]
+        \centering
+        \caption{数学重音符号}
+        \begin{tabular}{clclcl}
+            \toprule
+            $\hat{a}$           & \textbackslash hat\{a\}           & $\check{a}$           & \textbackslash check\{a\}             &
+            $\tilde{a}$         & \textbackslash tilde\{a\}                                                                         \\
+            $\acute{a}$         & \textbackslash acute\{a\}         & $\grave{a}$           & \textbackslash grave\{a\}             &
+            $\breve{a}$         & \textbackslash breve\{a\}                                                                         \\
+            $\bar{a}$           & \textbackslash bar\{a\}           & $\vec{a}$             & \textbackslash vec\{a\}               &
+            $\mathring{a}$      & \textbackslash mathring\{a\}                                                                      \\
+            $\dot{a}$           & \textbackslash dot\{a\}           & $\ddot{a}$            & \textbackslash ddot\{a\}              \\
+            $\widehat{AAA}$     & \textbackslash widehat\{AAA\}     & $\widetilde{AAA}$     & \textbackslash widetilde\{AAA\}       \\
+            \midrule
+            \multicolumn{6}{l}{以下命令依赖 amsmath 宏包}\\
+            $\dddot{a}$         & \textbackslash dddot\{a\}         & $\ddddot{a}$          & \textbackslash ddddot\{a\}            \\
+            \midrule
+            \multicolumn{6}{l}{以下命令依赖 yhmath 宏包}\\
+            $\wideparen{AAA}$   & \textbackslash wideparen\{AAA\}                                                                   \\    
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    使用时要注意 重音符号的作用区域,一般应当对某个符号而不是``符号加下标''使用重音:
+    \[\bar{x_0} \quad \bar{x}_0 \]
+    \[\vec{x_0} \quad \vec{x}_0 \]
+    \[\hat{\mathbf{e}_x} \quad \hat{\mathbf{e}}_x \]
+    \LaTeX 也能为多个字符加重音,包括直接画线的 \textbackslash overline 和 %
+    \textbackslash underline 命令(可叠加使 用)、宽重音符号 \textbackslash widehat、%
+    表示向量的箭头 \textbackslash overrightarrow 等。\par
+    \begin{table}[H]
+        \centering
+        \caption{作为重音的箭头符号}
+        \begin{tabular}{clcl}
+            \toprule
+            $\overrightarrow{AB}$           & \textbackslash overrightarrow\{AB\}           &
+            $\overleftarrow{AB}$            & \textbackslash overleftarrow\{AB\}            \\
+            \midrule
+            \multicolumn{4}{l}{以下命令依赖 amsmath 宏包}\\
+            $\underleftarrow{AB}$           & \textbackslash underleftarrow\{AB\}           &
+            $\underrightarrow{AB}$          & \textbackslash underrightarrow\{AB\}          \\
+            $\overleftrightarrow{AB}$       & \textbackslash overleftrightarrow\{AB\}       &
+            $\underleftrightarrow{AB}$      & \textbackslash underleftrightarrow\{AB\}      \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \[0.\overline{3} = \underline{\underline{1/3}} \]
+    \[\hat{XY} \qquad \widehat{XY} \]
+    \[\vec{AB} \qquad \overrightarrow{AB} \]
+    \textbackslash overbrace 和 \textbackslash underbrace 命令用来生成上/下括号,各自可带一个上/下标公式:
+    \[
+        \underbrace{\overbrace{a + b + c}^6 \cdot 
+                    \overbrace{d + e + f}^7
+                    }_\text{meaning of life} = 
+        42
+    \]
+    \subsubsection{箭头}
+    \begin{table}[H]
+        \centering
+        \caption{箭头}
+        \begin{tabular}{clcl}
+            $\leftarrow$            & \textbackslash leftarrow or  \textbackslash gets  & $\longleftarrow$            & \textbackslash longleftarrow        \\
+            $\rightarrow$           & \textbackslash rightarrow or \textbackslash to    & $\longrightarrow$           & \textbackslash longrightarrow       \\
+            $\leftrightarrow$       & \textbackslash leftrightarrow                     & $\longleftrightarrow$       & \textbackslash longleftrightarrow   \\
+            $\Leftarrow$            & \textbackslash Leftarrow                          & $\Longleftarrow$            & \textbackslash Longleftarrow        \\
+            $\Rightarrow$           & \textbackslash Rightarrow                         & $\Longrightarrow$           & \textbackslash Longrightarrow       \\
+            $\Leftrightarrow$       & \textbackslash Leftrightarrow                     & $\Longleftrightarrow$       & \textbackslash Longleftrightarrow   \\
+            $\mapsto$               & \textbackslash mapsto                             & $\longmapsto$               & \textbackslash longmapsto           \\
+            $\hookleftarrow$        & \textbackslash hookleftarrow                      & $\hookrightarrow$           & \textbackslash hookrightarrow       \\
+            $\leftharpoonup$        & \textbackslash leftharpoonup                      & $\rightharpoonup$           & \textbackslash rightharpoonup       \\
+            $\leftharpoondown$      & \textbackslash leftharpoondown                    & $\rightharpoondown$         & \textbackslash rightharpoondown     \\
+            $\rightleftharpoons$    & \textbackslash rightleftharpoons                  & $\iff$                      & \textbackslash iff                  \\
+            $\uparrow$              & \textbackslash uparrow                            & $\downarrow$                & \textbackslash downarrow            \\
+            $\updownarrow$          & \textbackslash updownarrow                        & $\Uparrow$                  & \textbackslash Uparrow              \\
+            $\Downarrow$            & \textbackslash Downarrow                          & $\Updownarrow$              & \textbackslash Updownarrow          \\
+            $\nearrow$              & \textbackslash nearrow                            & $\searrow$                  & \textbackslash searrow              \\
+            $\swarrow$              & \textbackslash swarrow                            & $\nwarrow$                  & \textbackslash nwarrow              \\
+            \midrule
+            \multicolumn{4}{l}{以下命令依赖 latexsym 宏包} \\
+            $\leadsto$              & \textbackslash leadsto                                                                                                \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    amsmath 的 \textbackslash xleftarrow 和 \textbackslash xrightarrow 命令%
+    提供了长度可以伸展的箭头,并且可以为 箭头增加上下标:
+    \[ a\xleftarrow{x + y + z} b \]
+    \[ c\xrightarrow[x < y]{a*b*c} d \]
+    \subsubsection{括号和定界符}
+    \begin{table}[H]
+        \centering
+        \caption{定界符}
+        \begin{tabular}{clclcl}
+            \toprule
+            $($                 & (                               & $)$                 & )                                 &
+            $\uparrow$          & \textbackslash uparrow                                                                    \\
+            $[$                 & \textbackslash lbrack or [      & $]$                 & \textbackslash rbrack or ]        &
+            $\downarrow$        & \textbackslash downarrow                                                                  \\
+            $\{$                & \textbackslash lbrace or \textbackslash\{                                                 & 
+            $\}$                & \textbackslash rbrace or \textbackslash\}                                                 &
+            $\updownarrow$      & \textbackslash updownarrow                                                                \\
+            $\langle$           & \textbackslash langle           & $\rangle$           & \textbackslash rangle             &
+            $\Uparrow$          & \textbackslash Uparrow                                                                    \\
+            $\vert$             & \textbackslash or |             & $\Downarrow$        & \textbackslash Downarrow          &
+            $\|$                & \textbackslash Vert or \textbackslash|                                                    \\
+            $/$                 & /                               & $\backslash$        & \textbackslash backslash          &
+            $\Updownarrow$      & \textbackslash Updownarrow                                                                \\
+            $\lfloor$           & \textbackslash lfloor           & $\rfloor$           & \textbackslash rfloor             &
+            $\rceil$            & \textbackslash rceil                                                                      \\
+            $\lceil$            & \textbackslash lceil                                                                      \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \begin{table}[H]
+        \centering
+        \caption{用于行间公式的大定界符}
+        \begin{tabular}{clcl}
+            \toprule
+            $\left\lgroup\right.$           & \textbackslash lgroup         & 
+            $\left\arrowvert\right.$        & \textbackslash arrowvert      \\
+            $\left\rgroup\right.$           & \textbackslash rgroup         &
+            $\left\Arrowvert\right.$        & \textbackslash Arrowvert      \\ 
+            $\left\lmoustache\right.$       & \textbackslash lmoustache     &
+            $\left\bracevert\right.$        & \textbackslash bracevert      \\
+            $\left\rmoustache\right.$       & \textbackslash rmoustache     \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \[ {a,b,c} \neq \{a,b,c\} \]
+    使用 \textbackslash left 和 \textbackslash right 命令可令括号(定界符)的大小可变,在行间公式中常用。%
+    \LaTeX 会自动根据括号内的公式大小决定定界符大小。\\
+    \textbackslash left 和 \textbackslash right 必须成对使用。需要使用单个定 界符时,另一个定界符写成%
+    \textbackslash left. 或 \textbackslash right.\par
+    \[
+        1 + \left( \frac{1}{1 - x^2} \right)^3  \qquad
+        \left.\frac{\partial f}{\partial t} \right|_{t = 0} 
+    \]
+    还可以用 \textbackslash big、\textbackslash bigg 等命令生成固定大小的定界符。\\
+    更常用的形式是类似 \textbackslash left 的 \textbackslash bigl、\textbackslash biggl 等,%
+    以及类似 \textbackslash right 的 \textbackslash bigr、\textbackslash biggr 等%
+    (\textbackslash bigl 和 \textbackslash bigr 不必成对出现)。\par
+    \[ \Bigl((x + 1)(x - 1)\Bigr)^2 \]
+    \[  \bigl( \Bigl( \biggl( \Biggl( \quad 
+        \bigr\} \Bigr\} \biggr\} \Biggr\} \quad
+        \big\| \Big\| \bigg\| \Bigg\| \quad
+        \big\Downarrow \Big\Downarrow
+        \bigg\Downarrow \Bigg\Downarrow
+    \]
+    \subsection{多行公式}
+
     \newpage
     \appendix
     \section{附录}
