@@ -11,11 +11,14 @@
 \usepackage{graphicx}
 \usepackage{subfig}
 \usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{amsbsy}
 \usepackage{latexsym}
 \usepackage{float}
 \DeclareMathOperator{\argh}{argh} 
 \DeclareMathOperator*{\nut}{Nut}
 \usepackage{yhmath}
+\usepackage{eucal,mathrsfs}
+
 
 \begin{document}
     \title{标题页}
@@ -49,6 +52,7 @@
     And I think this is: supercalifragilisticexpialidocious.\par
     \newpage
     \tableofcontents
+    \newpage
     \section[目录和页眉页脚]{章节}
     \subsection{子章节}
     \subsubsection{子子章节}
@@ -561,9 +565,14 @@
         \caption{文本/数学模式通用符号}
         \begin{tabular}{clclclcl}
             \hline
-            \{      & \textbackslash\{       & \}   & \textbackslash\}    & \$          & \textbackslash\$             & \%     & \textbackslash\%  \\
+            \{      & \textbackslash\{       & \}   & \textbackslash\}    & \$          & \textbackslash\$             & \%     & \textbackslash\%      \\
             \dag    & \textbackslash dag     & \S   & \textbackslash S    & \copyright  & \textbackslash copyright     & \dots  & \textbackslash dots   \\
-            \ddag   & \textbackslash ddag    & \P   & \textbackslash P    & \pounds     & \textbackslash pounds    \\
+            \ddag   & \textbackslash ddag    & \P   & \textbackslash P    & \pounds     & \textbackslash pounds        & \S     & \textbackslash S      \\
+            \textasteriskcentered   & \textbackslash textasteriskcentered &
+            \textperiodcentered     & \textbackslash textperiodcentered   &
+            \textbullet             & \textbackslash textbullet           \\
+            \textregistered{}       & \textbackslash textregistered{}     &
+            \texttrademark          & \textbackslash texttrademark        \\
             \hline
         \end{tabular}        
     \end{table}
@@ -1050,7 +1059,317 @@
         \bigg\Downarrow \Bigg\Downarrow
     \]
     \subsection{多行公式}
-
+    \subsubsection{长公式折行}
+    amsmath 宏包的 multline 环境提供了书写折行长公式的方便环境。它允许用 %
+    \textbackslash\textbackslash 折行,将 公式编号放在最后一行。%
+    多行公式的首行左对齐,末行右对齐,其余行居中。
+    \begin{multline}
+        a + b + c + d + e + f + g + h + i\\
+        = j + k + l + m + n\\
+        = o + p + q + r + s\\
+        = t + u + v + w + x
+    \end{multline}
+    类似 equation*,multline* 环境排版不带编号的折行长公式。
+    \subsubsection{多行公式}
+    罗列一系列公式,并令其按照等号对齐。\\
+    目前最常用的是 align 环境,它将公式用 \& 隔为两部分并对齐。分隔符通常放在等号左边:
+    \begin{align}
+        a & = b + c \\
+          & = d + c
+    \end{align}
+    align 环境会给每行公式都编号。我们仍然可以用 \textbackslash notag 去掉某行的编号。\\
+    为了对齐加号,我们将分隔符放在等号右边,这时需要给等号后添加一对括号 \{\} 以产生正常的 间距:
+    \begin{align}
+        a ={} & b + c   \\
+          ={} & d + e + f + g + h + i + j + k + l \notag    \\
+              & + m + n + o \\
+          ={} & p + q + r + s   
+    \end{align}
+    align 还能够对齐多组公式,除等号前的 \& 之外,公式之间也用 \& 分隔:
+    \begin{align}
+        a & = 1     & b & = 2   & c & = 3   \\
+        d & = - 1   & e & = - 2 & f & = - 5 
+    \end{align}
+    如果我们不需要按等号对齐,只需罗列数个公式,gather 将是一个很好用的环境:
+    \begin{gather}
+        a = b + c   \\
+        d = e + f + g   \\
+        h + i = j + k   \\
+        l + m = n
+    \end{gather}
+    align 和 gather 有对应的不带编号的版本 align* 和 gather*
+    \subsubsection{公用编号的多行公式}
+    多个公式组在一起公用一个编号,编号位于公式的居中位置。\\
+    amsmath 宏包提供了诸如 aligned、gathered 等环境,%
+    与 equation 环境套用。以 -ed 结尾的环境用法与前一节不以 -ed 结尾的环境用法一一对应。
+    \begin{equation}
+        \begin{aligned}
+            a & = b + c \\
+            d & = e + f + g   \\
+            h + i & = j + k   \\
+            l + m & = n
+        \end{aligned}
+    \end{equation}
+    split 环境和 aligned 环境用法类似,也用于和 equation 环境套用,区别是 split 只能 将每行的一个公式分两栏,
+    aligned 允许每行多个公式多栏。
+    \subsection{数组和矩阵}
+    二维数组,\LaTeX 提供了 array 环境,用法与 tabular 环境极为类似,%
+    也需要定 义列格式,并用 \textbackslash \textbackslash 换行。%
+    数组可作为一个公式块,在外套用 \textbackslash left、\textbackslash right 等定界符:
+    \[
+        \mathbf{X} = \left(
+            \begin{array}{cccc}
+                x_{11} & x_{12} & \ldots & x_{1n}   \\
+                x_{21} & x_{22} & \ldots & x_{2n}   \\
+                \vdots & \vdots & \ddots & \vdots   \\
+                x_{n1} & x_{n2} & \ldots & x_{nn}
+            \end{array}    
+        \right)  
+    \]
+    amsmath 提供的 cases 环境
+    \[
+        |x| =
+        \begin{cases}
+            - x & \text{if } x < 0, \\
+            0   & \text{if } x = 0, \\
+            x   & \text{if } x > 0.
+        \end{cases}
+    \]
+    amsmath 宏包提供了多种排版矩阵的环境,包括不带定界符的 matrix,以及带各种定界符的矩阵 pmatrix ($\left(\right.$) 、
+    bmatrix ($\left[\right.$) 、 Bmatrix ($\left\{\right.$) 。使用这些环境时,无需给定列格式 :
+    \[
+        \begin{matrix}
+            1 & 2   \\
+            3 & 4
+        \end{matrix}    \qquad
+        \begin{bmatrix}
+            x_{11} & x_{12} & \ldots & x_{1n} \\
+            x_{21} & x_{22} & \ldots & x_{2n} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            x_{n1} & x_{n2} & \ldots & x_{nn}
+        \end{bmatrix}
+    \]
+    在矩阵中的元素里排版分式时,一来要用到 \textbackslash dfrac 等命令,%
+    二来行与行之间有可能紧贴着, 这时要调节间距:
+    \[
+        \mathbf{H} =
+        \begin{bmatrix}
+            \dfrac{\partial^2 f}{\partial x^2}         & \dfrac{\partial^2 f}{\partial x\partial y} \\[8pt]
+            \dfrac{\partial^2 f}{\partial x\partial y} & \dfrac{\partial^2 f}{\partial y^2}
+        \end{bmatrix}    
+    \]
+    \subsection{公式中的间距}
+    生成间距的命令 \textbackslash quad 和 \textbackslash qquad 和 \textbackslash , 在文本和数学 环境中可用\\
+    \textbackslash ,、\textbackslash :、\textbackslash ; 以及负间距 \textbackslash ! %
+    命令只用于数学环境。文本中的 \textbackslash\verb*| | 也能使用在数学公式中。\par
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{ll|ll}
+            \hline
+            无额外间距                    &   aa          &   
+            \textbackslash ,            &   a\,a        \\
+            \textbackslash quad         &   a\quad a    &
+            \textbackslash :            &   a\:a        \\
+            \textbackslash qquad        &   a\qquad a   &
+            \textbackslash ;            &   a\;a        \\
+            \textbackslash \verb*| |    &   a\ a        &
+            \textbackslash !            &   a\!a        \\
+            \hline
+        \end{tabular}
+    \end{table}
+    一个常见的用途是修正积分的被积函数 $f(x)$ 和微元 $\text{d}x$ 之间的距离。
+    \[
+        \int_a^b f(x) \mathrm{d}x
+        \qquad
+        \int_a^b f(x) \, \mathrm{d}x    
+    \]
+    另一个用途是生成多重积分号。如果我们直接连写两个 \textbackslash int,%
+    之间的间距将会过宽,此时 可以使用负间距 \textbackslash ! 修正之。    
+    \begin{gather*}
+        \int\int f(x)g(y) \,\mathrm{d}x\,\mathrm{d}y    \\
+        \int\!\!\!\int f(x)g(y) \mathrm{d}\,x\mathrm{d}\,y
+    \end{gather*}
+    amsmath 提供了更方便的多重积分号,如二重积分 \textbackslash iint、%
+    三 重积分 \textbackslash iiint 等。
+    \begin{gather*}
+        \iint f(x)g(y) \,\mathrm{d}x\,\mathrm{d}y   \\
+        \iint \quad \iiint \quad \idotsint
+    \end{gather*}
+    \subsection{数学符号的字体控制}
+    \subsubsection{数学字母字体}
+    \begin{table}[H]
+        \centering
+        \caption{数学字母字体}
+        \begin{tabular}{lll}
+            \toprule
+            示例 &命令 &依赖的宏包\\
+            \midrule
+            $\mathnormal{ABCDEabcde1234}$   & \textbackslash mathnormal\{\ldots\}   &                     \\
+            $\mathrm{ABCDEabcde1234}$       & \textbackslash mathrm\{\ldots\}       &                     \\
+            $\mathit{ABCDEabcde1234}$       & \textbackslash mathit\{\ldots\}       &                     \\
+            $\mathbf{ABCDEabcde1234}$       & \textbackslash mathbf\{\ldots\}       &                     \\
+            $\mathsf{ABCDEabcde1234}$       & \textbackslash mathsf\{\ldots\}       &                     \\
+            $\mathtt{ABCDEabcde1234}$       & \textbackslash mathtt\{\ldots\}       &                     \\
+            $\mathcal{ABCDEabcde1234}$      & \textbackslash mathcal\{\ldots\}      & 只大写字母            \\
+            \midrule
+            $\mathcal{ABCDE}$               & \textbackslash mathcal\{\ldots\}      & eucal,只大写字母      \\
+            $\mathscr{ABCDE}$               & \textbackslash mathscr\{\ldots\}      & mathrsfs,只大写字母   \\
+            $\mathfrak{ABCDEabcde1234}$     & \textbackslash mathfrak\{\ldots\}     & amssymb 或 eufrak    \\
+            $\mathbb{ABCDE}$                & \textbackslash mathbb\{\ldots\}       & amssymb,只大写字母    \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \[ \mathcal{R} \quad \mathfrak{R \quad \mathbb{R}} \]
+    \[ \mathcal{L} = -\frac{1}{4}F_{\mu\nu}F^{\mu\nu} \]
+    $\mathfrak{su}(2)$ and $\mathfrak{so}(3)$ Lie algebra
+    \subsubsection{数学符号的尺寸}
+    \begin{table}[H]
+        \centering
+        \caption{数学符号尺寸}
+        \begin{tabular}{lll}
+            \toprule
+            命令 &尺寸 &示例\\
+            \midrule
+            \textbackslash displaystyle         & 行间公式尺寸      & $\displaystyle \sum a$    \\
+            \textbackslash textstyle            & 行内公式尺寸      & $\textstyle \sum a$       \\
+            \textbackslash scriptstyle          & 上下标尺寸        & $\scriptstyle a$          \\
+            \textbackslash scriptscriptstyle    & 次级上下标尺寸    & $\scriptscriptstyle a$    \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \[
+        P = \frac
+            {\sum_{i = 1}^n (x_i - x)(y_i - y)}
+            {\displaystyle \left[
+                \sum_{i = 1}^n (x_i - x)^2
+                \sum_{i = 1}^n (y_i - y)^2
+            \right]^{1/2}}\,   
+    \]
+    \subsubsection{加粗的数学符号}
+    \LaTeX 提供了一个命令 \textbackslash boldmath 令用户可以将整套数学字体切换为粗体版本。但这个命 令只能在公式外使用:\par
+    $\mu, M \qquad \mathbf{\mu}, \mathbf{M}$ \qquad
+    {\boldmath$\mu, M$\par}
+    amsmath 提供了一个 \textbackslash boldsymbol 命令(由调用的 amsbsy 宏包提供) ,%
+    用于打破 \textbackslash boldmath 的限制,在公式内部将一部分符号切换为粗体。\par
+    $\mu, M \qquad \boldsymbol{\mu}, \boldsymbol{M}$
+    \subsection{定理环境}
+    \subsubsection{\LaTeX 原始的定理环境}
+    \textbackslash newtheorem$\{\langle theorem environment\rangle\}\{\langle title\rangle\}[\langle section-level\rangle]$\\
+    \textbackslash newtheorem$\{\langle theorem environment\rangle\}[\langle counter\rangle]\{\langle title\rangle\}$\\
+    $\langle theorem environment\rangle$为定理环境的名称。%
+    $\langle title\rangle$是定理环境的标题(``定理'',``公理''等)。\par
+    定理的序号由两个可选参数之一决定,它们不能同时使用:
+    \renewcommand{\labelitemi}{\textbullet}
+    \begin{itemize}
+        \item $\langle section-level\rangle$为章节级别,如 chapter、section 等,%
+            定理序号成为章节的下一级序号;
+        \item $\langle counter\rangle$为用 \textbackslash newcounter 自定义的计数器名称,
+            定理序号由这个计数器 管理。
+    \end{itemize}
+    \newtheorem{mythm}{My Theorem}[subsection]
+    \begin{mythm}\label{thm:light}
+        The light speed in vacuum%
+        is $299,792,458\,\mathrm{m/s}$.
+    \end{mythm}
+    \begin{mythm}[Energy-momentum relation]
+        The relationship of energy, %
+        momentum and mass is%
+        \[E^2 = m_0^2 c^4 + p^2 c^2\]
+        where $c$ is the light speed %
+        described in theorem \ref{thm:light}.
+    \end{mythm}
+    \subsubsection{amsthm 宏包}
+    amsthm 提供了 \textbackslash theoremstyle 命令支持定理格式的切换,%
+    在用 \textbackslash newtheorem 命令定义定 理环境之前使用。\\
+    amsthm 预定义了三种格式用于 \textbackslash theoremstyle:
+    \begin{itemize}
+        \item plain 和 \LaTeX 原始的格式 一致
+        \item definition 使用粗体标签、正体内容
+        \item remark 使用斜体标签、正体内容
+    \end{itemize}
+    另外 amsthm 还支持用带星号的 \textbackslash newtheorem* 定义不带序号的定理环境\par
+    \theoremstyle{definition} \newtheorem{law}{Law}
+    \theoremstyle{plain} \newtheorem{jury}[law]{Jury}
+    \theoremstyle{remark} \newtheorem*{mar}{Margaret}
+    \begin{law}\label{law:box}
+        Don't hide in the witness box.
+    \end{law}
+    \begin{jury}[The Tewlve]
+        It could be you! So beware and see law~\ref{law:box}.
+    \end{jury}
+    \begin{mar}
+        No, No, No
+    \end{mar}
+    \begin{mar}
+        Denis!
+    \end{mar}
+    以上例子定义的 jury 环境与 law 环境共用编号,mar 环境不编号\par
+    amsthm 还支持使用 \textbackslash newtheoremstyle 命令自定义定理格式,%
+    更为方便使用的是 ntheorem 宏包。
+    \subsubsection{证明环境和证毕符号}
+    amsthm 还提供了一个 proof 环境用于排版定理的证明过程。%
+    proof 环境末尾自动加上一个 $\Box$ 证毕符号:
+    \renewcommand{\proofname}{\indent \textit{Proof}}
+    \begin{proof}
+        For simplicity, we use
+        \[ E = mc^2 \]
+        That's it.
+    \end{proof}
+    如果行末是一个不带编号的公式, 符号会另起一行,%
+    这时可使用 \textbackslash qedhere 命令将 号放在公式末尾:
+    \begin{proof}
+        For simplicity, we use
+        \[ E = mc^2 \qedhere \] 
+    \end{proof}
+    \textbackslash qedhere 对于 align* 等命令也有效:
+    \begin{proof}
+        Assuming $\gamma = 1/\sqrt{a-v^2/c^2}$, then
+        \begin{align*}
+            E & = \gamma m_0 c^2    \\
+            p & = \gamma m_0 v \qedhere
+        \end{align*}
+    \end{proof}
+    在使用带编号的公式时,建议最好不要在公式末尾使用 \textbackslash qedhere 命令。%
+    对带编号的公式使 用 \textbackslash qedhere 命令会使符号放在一个难看的位置,紧贴着公式:
+    \begin{proof}
+        For simplicity, we use
+        \begin{equation}
+            E = mc^2 \qedhere
+        \end{equation}
+    \end{proof}
+    \begin{proof} For simplicity, we use 
+        \begin{equation} 
+            E = mc^2 
+        \end{equation} 
+    \end{proof}
+    在 align 等环境中使用 \textbackslash qedhere 命令会使 $\Box$ 盖掉公式的编号:
+    \begin{proof}
+        Assuming $\gamma = 1/\sqrt{a-v^2/c^2}$, then 
+        \begin{align} 
+            E & = \gamma m_0 c^2 \\ 
+            p & = \gamma m_0 v \qedhere 
+        \end{align}
+    \end{proof}
+    使用 equation 嵌套 aligned 等环境时,\textbackslash qedhere 命令会将%
+    $\Box$ 直接放在公式后:
+    \begin{proof}
+        Assuming $\gamma = 1/\sqrt{a-v^2/c^2}$, then
+        \begin{equation}
+            \begin{aligned}
+                E & = \gamma m_0 c^2 \\ 
+                p & = \gamma m_0 v \qedhere
+            \end{aligned}
+        \end{equation}
+    \end{proof}
+    证毕符号 $\Box$ 本身被定义在命令 \textbackslash qedsymbol 中,%
+    如果有使用实心符号作为证毕符号的需求, 需要自行用%
+    \textbackslash renewcommand命令修改
+    \renewcommand{\qedsymbol}{\rule{1ex}{1.5ex}}
+    \renewcommand{\proofname}{\textit{Proof}}    
+    \begin{proof}
+        For simplicity, we use
+        \[ E=mc^2 \qedhere \]
+    \end{proof}
     \newpage
     \appendix
     \section{附录}
