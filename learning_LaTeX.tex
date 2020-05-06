@@ -1,6 +1,7 @@
 %TEX program = xelatex
 %表示用xelatex编译文件
 \documentclass[a4paper]{ctexart}
+\usepackage{ulem}
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{indentfirst} 
@@ -18,7 +19,10 @@
 \DeclareMathOperator*{\nut}{Nut}
 \usepackage{yhmath}
 \usepackage{eucal,mathrsfs}
-
+\usepackage[T1]{fontenc}
+\usepackage{txfonts}
+\usepackage{fontspec}
+\setsansfont[BoldFont={Arial Bold}, ItalicFont={Arial Italic}]{Arial}
 
 \begin{document}
     \title{标题页}
@@ -1370,6 +1374,176 @@
         For simplicity, we use
         \[ E=mc^2 \qedhere \]
     \end{proof}
+    \section{排版样式设定}
+    \subsection{字体和字号}
+    {\small The small and \textbf{bold} Romans ruled}
+    {\Large all of great big {\itshape Italy}.}
+    \subsubsection{字体样式}
+    \begin{table}[H]
+        \centering
+        \caption{字体命令}
+        \begin{tabular}{lllll}
+            \toprule
+             \textbackslash rmfamily    &\textbackslash textrm\{\ldots\}
+            &\textbackslash rm\{\ldots\}       
+            &\rm{roman}                 &衬线字体(罗马体) \\
+
+             \textbackslash sffamily    &\textbackslash textsf\{\ldots\}
+            &\textbackslash sf\{\ldots\}       
+            &\sf{sans serif}            &无衬线字体 \\
+
+             \textbackslash ttfamily    &\textbackslash texttt\{\ldots\}
+            &\textbackslash tt\{\ldots\}       
+            &\tt{typewriter}            &等宽字体\\
+
+
+             \textbackslash mdseries    &\textbackslash textmd\{\ldots\}
+            &       
+            &\textmd{medium}            &正常粗细(中等) \\
+
+             \textbackslash bfseries    &\textbackslash textbf\{\ldots\} 
+            &\textbackslash bf\{\ldots\}      
+            &\bf{bold face}             &粗体 \\
+
+             \textbackslash upshape     &\textbackslash textup\{\ldots\}
+            &       
+            &\textup{upright}           &直立体 \\
+
+             \textbackslash itshape     &\textbackslash textit\{\ldots\} 
+            &\textbackslash it\{\ldots\}      
+            &\it{italic}                &意大利斜体 \\
+
+             \textbackslash slshape     &\textbackslash textsl\{\ldots\}
+            &\textbackslash sl\{\ldots\}       
+            &\sl{slanted}               &倾斜体 \\
+
+             \textbackslash scshape     &\textbackslash textsc\{\ldots\}
+            &\textbackslash sc\{\ldots\}       
+            &\sc{small caps}            &小字母大写 \\
+
+             \textbackslash em          &\textbackslash emph\{\ldots\}
+            &          
+            &\emph{emphasized}          &强调,默认斜体 \\
+
+             \textbackslash normalfont  &\textbackslash textnormal\{\ldots\}   
+            &
+            &\textnormal{normal font}   &默认字体 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    诸如 \textbackslash bfseries 形式的命令将会影响之 后所有的字符,%
+    如果想要让它在局部生效,需要用花括号分组,也就是写成 \{\textbackslash bfseries %
+    $\langle some\;text\rangle$\} 这样的形式;\\
+    对应的 \textbackslash textbf 形式带一个参数,只改变参数内部的字体,更为常用。\par
+    在公式中,直接使用 \textbackslash textbf 等命令不会起效,甚至报错。\par
+    \subsubsection{字号}
+    \begin{table}[H]
+        \centering
+        \caption{字号}\label{字号}
+        \begin{tabular}{lllll}
+            \toprule
+            \multicolumn{2}{l}{\bf{字号}}   
+            &\bf{10pt 选项(默认)}    &\bf{11pt 选项}  &\bf{12pt 选项}         \\
+            \midrule
+            \textbackslash tiny             &\tiny tiny font                
+            &5pt                    &6pt            &6pt                    \\
+            \textbackslash scriptsize       &\scriptsize very small font    
+            &7pt                    &8pt            &8pt                    \\
+            \textbackslash footnotesize     &\footnotesize quite small font 
+            &8pt                    &9pt            &10pt                   \\
+            \textbackslash small            &\small small font              
+            &9pt                    &10pt           &10.95pt                \\
+            \textbackslash normalsize       &\normalsize normalfont         
+            &10pt                   &10.95pt        &12pt                   \\
+            \textbackslash large            &\large large font              
+            &12pt                   &12pt           &14.4pt                 \\
+            \textbackslash Large            &\Large larger font     
+            &14.4pt                 &14.4pt         &17.28pt                \\
+            \textbackslash LARGE            &\LARGE very large font 
+            &17.28pt                &17.28pt        &20.74pt                \\
+            \textbackslash huge             &\huge huge             
+            &20.74pt                &20.74pt        &24.88pt                \\ 
+            \textbackslash huge             &\huge largest          
+            &24.88pt                &24.88pt        &24.88pt                \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    字号命令实际大小依赖于所使用的文档类及其选项。\\
+    使用字号命令的时候,通常也需要用花括号进行分组,%
+    如同 \textbackslash rmfamily 那样。\par
+    He likes {\LARGE large and {\small small} letters}.\par
+    还提供了一个基础的命令 \textbackslash fontsize 用于设定任意大小的字号:\par
+    \textbackslash fontsize\{$\langle size\rangle$\}\{$\langle line-skip\rangle$\}\par
+    $\langle size\rangle$为字号,$\langle line-skip\rangle$为基础行距。\par
+    表 \ref{字号} 中的命令也 都各自设定了与字号对应的基础行距,大小为字号的 1.2 倍。\par
+    如果不是在导言区,\textbackslash fontsize 设定需要 \textbackslash selectfont 命令才能立即生效,%
+    而表 \ref{字号} 的字号设定都是立即生效的。
+    \subsubsection{选用字体宏包}
+    \begin{table}[H]
+        \centering
+        \caption{常见的 \LaTeX 字体宏包}\label{字体宏包}
+        \begin{tabular}{ll}
+            \toprule
+            \multicolumn{2}{c}{\bf{文本 / 数学字体搭配的宏包}}\\
+            \midrule
+            lmodern                 &Latin Modern 字体,对 Computer Modern 字体的扩展        \\
+            cmbright                &仿 Computer Modern 风格的无衬线字体                    \\
+            euler                   &Euler 风格数学字体,也出自于高德纳之手                    \\
+            ccfonts                 &Concrete 风格字体                                     \\
+            txfonts                 &Times 风格的字体宏包                                   \\
+            pxfonts                 &Palatino 风格的字体宏包                                \\
+            stix                    &Times 风格的字体宏包                                   \\
+            newtxtext,newtxmath     &txfonts 的改进版本,分别设置文本和数学字体                  \\
+            newpxtext,newpxmath     &pxfonts 的改进版本,分别设置文本和数学字体                  \\
+            mathptmx                &psnfss 字体宏集之一,Times 风格,较为陈旧,不推荐使用          \\
+            mathpazo                &psnfss 字体宏集之一,Palatino 风格,较为陈旧,不推荐使用       \\
+            fourier                 &fourier 风格数学字体,配合 Utopia 正文字体                  \\
+            fouriernc               &fourier 风格数学字体,配合New Century Schoolbook 正文字体   \\
+            arev                    &Arev 无衬线字体宏包,Vera Sans 风格                        \\
+            mathdesign              &配合 Charter / Garamond / Utopia 正文字体的数学字体宏      \\
+            \midrule
+            \multicolumn{2}{c}{\bf{文本字体宏包}}\\
+            \multicolumn{2}{l}{以下字体包括传统的 \LaTeX 字体格式以及 TrueType / OpenType 格式。}\\
+            \midrule
+            cm-unicode      &Computer Modern 风格的 Unicode 字体,支持多种西方语言   \\
+            dejavu          &DejaVu 开源字体                                     \\
+            droid           &Droid 开源字体                                      \\
+            inconsolata     &Inconsolata 开源等宽字体                             \\
+            libertine       &Linux Libertine / Linux Biolium 开源字体            \\
+            roboto          &Roboto 开源无衬线字体                                \\
+            sourcesanspro   &Source Sans Pro 开源无衬线字体                       \\
+            sourcecodepro   &Source Code Pro 开源等宽字体                         \\
+            \midrule
+            \multicolumn{2}{c}{\bf{符号宏包}}\\
+            mathabx     &数学符号宏包之一                         \\
+            MnSymbol    &数学符号宏包之一,配合 Minion Pro 文本字体  \\
+            fdsymbol    &数学符号宏包之一                         \\
+            pifont      &Zapf Dingbats 符号宏包                  \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \subsubsection{字体编码}
+    字体编码规定了一个字体里包含的符号,并 将若干符号用 \LaTeX 命令定义。\par
+    常见的正文字体编码有 OT1 和 T1 等。\LaTeX 默认使用兼容 plain \TeX 的 OT1 编码\par
+    切换字体编码要用到 fontenc 宏包:\\
+    \textbackslash usepackage[T1]\{fontenc\}\par
+    fontenc 宏包是用来配合传统的 \LaTeX 字体的,如表 \ref{字体宏包} 中的一些传统字体宏包。%
+    如果使用 xelatex 编译方式,并使用 fontspec 宏包调用 ttf 或 otf 格式字体,就不要再使用 fontenc 宏 包。
+    \subsubsection{使用 fontspec 宏包更改字体 (xelatex)}
+    xelatex 命令下支持用户调用字体的宏包是 fontspec。宏包提供了几个设置全局字体的命 令,设置 %
+    \textbackslash rmfamily 等对应命令的默认字体 :\footnote{新版本 fontspec 的命令支持%
+    (并且推荐)把必选参数 $\langle font name\rangle$ 放在可选参数$\langle font features\rangle$ 的前面。}\par
+    \textbackslash setmainfont[$\langle font features\rangle$]\{$\langle font name\rangle$\} \\
+    \textbackslash setsansfont[$\langle font features\rangle$]\{$\langle font name\rangle$\} \\
+    \textbackslash setmonofont[$\langle font features\rangle$]\{$\langle font name\rangle$\}\\
+    $\langle font name\rangle$使用字体的文件名(带扩展名)或者字体的英文名称, %
+    $\langle font features\rangle$用来手 动配置对应的粗体或斜体。\par
+    \subsubsection{使用 xeCJK 宏包更改中文字体}
+    \textbackslash setCJKmainfont[$\langle font features\rangle$]\{$\langle font name\rangle$\} \\ 
+    \textbackslash setCJKsansfont[$\langle font features\rangle$]\{$\langle font name\rangle$\} \\ 
+    \textbackslash setCJKmonofont[$\langle font features\rangle$]\{$\langle font name\rangle$\}\\
+    由于中文字体少有对应的粗体或斜体, $\langle font features\rangle$ 里多用其他字体来配置,%
+    比如将宋体 对应的 BoldFont 配置为黑体,而 ItalicFont 配置为楷体。
     \newpage
     \appendix
     \section{附录}
