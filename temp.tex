@@ -1,8 +1,14 @@
 \documentclass[UTF8]{ctexart}
-    \title{文章标题}
-    \author{David}
-    \date{\today}
+    
+\usepackage{graphicx}
+    
 \begin{document}
-    \maketitle
-    This is the context of the article.
-    \end{document}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[scale=0.5  ]{Central_Topic.eps}
+        \caption{eps}
+        \label{eps}
+    \end{figure}
+     
+这是图\ref{eps}
+\end{document}
